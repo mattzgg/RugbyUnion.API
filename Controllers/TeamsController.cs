@@ -64,26 +64,26 @@ namespace RugbyUnion.API.Controllers
             }
 
             var team = _mapper.Map<SaveTeamResource, Team>(resource);
-            var teamResponse = await _teamService.AddAsync(team);
-            if (!teamResponse.Success)
+            var tsResponse = await _teamService.AddAsync(team);
+            if (!tsResponse.Success)
             {
-                return BadRequest(teamResponse.Message);
+                return BadRequest(tsResponse.Message);
             }
 
-            var teamResource = _mapper.Map<Team, TeamResource>(teamResponse.Team);
+            var teamResource = _mapper.Map<Team, TeamResource>(tsResponse.Result);
             return Ok(teamResource);
         }
 
         [HttpPut("sign/{playerId}/to/{teamId}/")]
         public async Task<IActionResult> SignAsync(int playerId, int teamId)
         {
-            var playerResponse = await _teamService.SignAsync(playerId, teamId);
-            if (!playerResponse.Success)
+            var tsResponse = await _teamService.SignAsync(playerId, teamId);
+            if (!tsResponse.Success)
             {
-                return BadRequest(playerResponse.Message);
+                return BadRequest(tsResponse.Message);
             }
 
-            var playerResource = _mapper.Map<Player, PlayerResource>(playerResponse.Player);
+            var playerResource = _mapper.Map<Player, PlayerResource>(tsResponse.Result);
             return Ok(playerResource);
         }
     }

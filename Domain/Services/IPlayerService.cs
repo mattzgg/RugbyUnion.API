@@ -8,7 +8,7 @@ namespace RugbyUnion.API.Domain.Services
     public interface IPlayerService
     {
         Task<IEnumerable<Player>> GetAllAsync();
-        Task<PlayerResponse> FindByIdAsync(int playerId);
-        Task<PlayerResponse> AddAsync(Player newPlayer);
+        Task<ServiceResponse<Player>> FindByIdAsync(int playerId);
+        Task<ServiceResponse<Player>> AddAsync(Player newPlayer);
     }
 }

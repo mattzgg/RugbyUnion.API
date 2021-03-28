@@ -48,12 +48,12 @@ namespace RugbyUnion.API.Controllers
             }
 
             Player newPlayer = _mapper.Map<SavePlayerResource, Player>(resource);
-            PlayerResponse response = await _playerService.AddAsync(newPlayer);
-            if (!response.Success)
+            ServiceResponse<Player> psResponse = await _playerService.AddAsync(newPlayer);
+            if (!psResponse.Success)
             {
-                return BadRequest(response.Message);
+                return BadRequest(psResponse.Message);
             }
-            PlayerResource newPlayerResource = _mapper.Map<Player, PlayerResource>(response.Player);
+            PlayerResource newPlayerResource = _mapper.Map<Player, PlayerResource>(psResponse.Result);
             return Ok(newPlayerResource);
         }
 
@@ -70,12 +70,12 @@ namespace RugbyUnion.API.Controllers
                 return BadRequest(ModelState.GetErrorMessages());
             }
 
-            PlayerResponse response = await _playerService.FindByIdAsync(playerId);
-            if (!response.Success)
+            ServiceResponse<Player> psResponse = await _playerService.FindByIdAsync(playerId);
+            if (!psResponse.Success)
             {
-                return BadRequest(response.Message);
+                return BadRequest(psResponse.Message);
             }
-            Team team = response.Player.Team;
+            Team team = psResponse.Result.Team;
             if (team == null)
             {
                 return BadRequest("Player has not been signed to a team");

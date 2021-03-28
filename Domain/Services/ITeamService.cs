@@ -10,8 +10,8 @@ namespace RugbyUnion.API.Domain.Services
     {
         Task<IEnumerable<Team>> GetAllAsync();
         Task<Team> FindByIdAsync(int teamId);
-        Task<TeamResponse> AddAsync(Team team);
+        Task<ServiceResponse<Team>> AddAsync(Team team);
 
-        Task<PlayerResponse> SignAsync(int playerId, int teamId);
+        Task<ServiceResponse<Player>> SignAsync(int playerId, int teamId);
     }
 }

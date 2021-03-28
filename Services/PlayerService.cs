@@ -25,23 +25,23 @@ namespace RugbyUnion.API.Services
             return await _playerRepository.GetAllAsync();
         }
 
-        public async Task<PlayerResponse> FindByIdAsync(int playerId)
+        public async Task<ServiceResponse<Player>> FindByIdAsync(int playerId)
         {
             Player player = await _playerRepository.FindByIdAsync(playerId);
-            return player == null ? new PlayerResponse("Player not found") : new PlayerResponse(player);
+            return player == null ? new ServiceResponse<Player>("Player not found") : new ServiceResponse<Player>(player);
         }
 
-        public async Task<PlayerResponse> AddAsync(Player newPlayer)
+        public async Task<ServiceResponse<Player>> AddAsync(Player newPlayer)
         {
             try
             {
                 await _playerRepository.AddAsync(newPlayer);
                 await _unitOfWork.CompleteAsync();
-                return new PlayerResponse(newPlayer);
+                return new ServiceResponse<Player>(newPlayer);
             }
             catch (Exception ex)
             {
-                return new PlayerResponse($"An error occurred when adding the new player: {ex.Message}");
+                return new ServiceResponse<Player>($"An error occurred when adding the new player: {ex.Message}");
             }
         }
     }

@@ -31,45 +31,45 @@ namespace RugbyUnion.API.Services
             return await _teamRepository.FindByIdAsync(teamId);
         }
 
-        public async Task<TeamResponse> AddAsync(Team team)
+        public async Task<ServiceResponse<Team>> AddAsync(Team team)
         {
             try
             {
                 await _teamRepository.AddAsync(team);
                 await _unitOfWork.CompleteAsync();
-                return new TeamResponse(team);
+                return new ServiceResponse<Team>(team);
             }
             catch (Exception ex)
             {
-                return new TeamResponse($"An error occurred when saving the team: {ex.Message}");
+                return new ServiceResponse<Team>($"An error occurred when saving the team: {ex.Message}");
             }
         }
 
-        public async Task<PlayerResponse> SignAsync(int playerId, int teamId)
+        public async Task<ServiceResponse<Player>> SignAsync(int playerId, int teamId)
         {
             Player player = await _playerRepository.FindByIdAsync(playerId);
             if (player == null)
             {
-                return new PlayerResponse($"Player not found");
+                return new ServiceResponse<Player>($"Player not found");
             }
             Team team = await _teamRepository.FindByIdAsync(teamId);
             if (team == null)
             {
-                return new PlayerResponse($"Team not found");
+                return new ServiceResponse<Player>($"Team not found");
             }
             if (player.TeamId == team.Id)
             {
-                return new PlayerResponse($"Repetitive signing found");
+                return new ServiceResponse<Player>($"Repetitive signing found");
             }
             try
             {
                 player.Team = team;
                 await _unitOfWork.CompleteAsync();
-                return new PlayerResponse(player);
+                return new ServiceResponse<Player>(player);
             }
             catch (Exception ex)
             {
-                return new PlayerResponse($"An error occurred when siging the player: {ex.Message}");
+                return new ServiceResponse<Player>($"An error occurred when siging the player: {ex.Message}");
             }
         }
     }
