@@ -20,9 +20,10 @@ namespace RugbyUnion.API.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<Player>> GetAllAsync()
+        public async Task<ServiceResponse<IEnumerable<Player>>> GetAllAsync()
         {
-            return await _playerRepository.GetAllAsync();
+            var players = await _playerRepository.GetAllAsync();
+            return new ServiceResponse<IEnumerable<Player>>(players);
         }
 
         public async Task<ServiceResponse<Player>> FindByIdAsync(int playerId)

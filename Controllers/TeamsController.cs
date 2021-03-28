@@ -29,11 +29,11 @@ namespace RugbyUnion.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IEnumerable<TeamResource>> GetAllAsync()
+        public async Task<IActionResult> GetAllAsync()
         {
-            var teams = await _teamService.GetAllAsync();
-            var resources = _mapper.Map<IEnumerable<Team>, IEnumerable<TeamResource>>(teams);
-            return resources;
+            var tsResponse = await _teamService.GetAllAsync();
+            var resources = _mapper.Map<IEnumerable<Team>, IEnumerable<TeamResource>>(tsResponse.Result);
+            return Ok(resources);
         }
 
         /// <summary>

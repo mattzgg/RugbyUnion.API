@@ -21,14 +21,16 @@ namespace RugbyUnion.API.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<Team>> GetAllAsync()
+        public async Task<ServiceResponse<IEnumerable<Team>>> GetAllAsync()
         {
-            return await _teamRepository.GetAllAsync();
+            var teams = await _teamRepository.GetAllAsync();
+            return new ServiceResponse<IEnumerable<Team>>(teams);
         }
 
-        public async Task<Team> FindByIdAsync(int teamId)
+        public async Task<ServiceResponse<Team>> FindByIdAsync(int teamId)
         {
-            return await _teamRepository.FindByIdAsync(teamId);
+            var team = await _teamRepository.FindByIdAsync(teamId);
+            return new ServiceResponse<Team>(team);
         }
 
         public async Task<ServiceResponse<Team>> AddAsync(Team team)

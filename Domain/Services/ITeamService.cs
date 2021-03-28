@@ -8,8 +8,8 @@ namespace RugbyUnion.API.Domain.Services
 {
     public interface ITeamService
     {
-        Task<IEnumerable<Team>> GetAllAsync();
-        Task<Team> FindByIdAsync(int teamId);
+        Task<ServiceResponse<IEnumerable<Team>>> GetAllAsync();
+        Task<ServiceResponse<Team>> FindByIdAsync(int teamId);
         Task<ServiceResponse<Team>> AddAsync(Team team);
         Task<ServiceResponse<IEnumerable<Player>>> GetSignedPlayersAsync(int teamId);
         Task<ServiceResponse<Player>> SignAsync(int teamId, int playerId);
