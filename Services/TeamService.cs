@@ -56,7 +56,7 @@ namespace RugbyUnion.API.Services
             return new ServiceResponse<IEnumerable<Player>>(signedPlayers);
         }
 
-        public async Task<ServiceResponse<Player>> SignAsync(int playerId, int teamId)
+        public async Task<ServiceResponse<Player>> SignAsync(int teamId, int playerId)
         {
             Player player = await _playerRepository.FindByIdAsync(playerId);
             if (player == null)

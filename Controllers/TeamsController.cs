@@ -83,10 +83,10 @@ namespace RugbyUnion.API.Controllers
             return Ok(teamResource);
         }
 
-        [HttpPut("sign/{playerId}/to/{teamId}/")]
-        public async Task<IActionResult> SignAsync(int playerId, int teamId)
+        [HttpPut("{teamId}/sign-player/{playerId}")]
+        public async Task<IActionResult> SignAsync(int teamId, int playerId)
         {
-            var tsResponse = await _teamService.SignAsync(playerId, teamId);
+            var tsResponse = await _teamService.SignAsync(teamId, playerId);
             if (!tsResponse.Success)
             {
                 return BadRequest(tsResponse.Message);
