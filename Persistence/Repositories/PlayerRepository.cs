@@ -17,7 +17,7 @@ namespace RugbyUnion.API.Persistence.Repositories
 
         public async Task<Player> FindByIdAsync(int playerId)
         {
-            return await _context.Players.FindAsync(playerId);
+            return await _context.Players.Include(p => p.Team).FirstOrDefaultAsync(p => p.Id == playerId);
         }
 
         public async Task AddAsync(Player player)

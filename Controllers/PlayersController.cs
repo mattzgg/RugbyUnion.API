@@ -76,6 +76,10 @@ namespace RugbyUnion.API.Controllers
                 return BadRequest(response.Message);
             }
             Team team = response.Player.Team;
+            if (team == null)
+            {
+                return BadRequest("Player has not been signed to a team");
+            }
             TeamResource teamResource = _mapper.Map<Team, TeamResource>(team);
             return Ok(teamResource);
         }
