@@ -7,4 +7,4 @@
 
 # Illustration
 
-![Illustration](./Docs/Illustration.png)
+![Illustration](./Docs/illustration.png)
