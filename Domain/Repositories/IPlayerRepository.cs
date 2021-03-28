@@ -11,5 +11,6 @@ namespace RugbyUnion.API.Domain.Repositories
         Task<Player> FindByIdAsync(int playerId);
 
         Task AddAsync(Player player);
+        Task<IEnumerable<Player>> GetSignedPlayersAsync(int teamId);
     }
 }

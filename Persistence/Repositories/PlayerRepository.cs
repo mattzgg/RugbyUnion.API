@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,11 @@ namespace RugbyUnion.API.Persistence.Repositories
         public async Task AddAsync(Player player)
         {
             await _context.Players.AddAsync(player);
+        }
+
+        public async Task<IEnumerable<Player>> GetSignedPlayersAsync(int teamId)
+        {
+            return await _context.Players.Include(p => p.Team).Where(p => p.TeamId == teamId).ToListAsync();
         }
     }
 }

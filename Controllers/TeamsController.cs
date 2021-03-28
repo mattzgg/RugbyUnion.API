@@ -41,13 +41,22 @@ namespace RugbyUnion.API.Controllers
         /// </summary>
         /// <param name="teamId"></param>
         /// <returns></returns>
-        [HttpGet("{teamId}/players")]
-        public async Task<IEnumerable<PlayerResource>> GetAllPlayersOfTeamAsync(int teamId)
+        [HttpGet("{teamId}/signed-players")]
+        public async Task<IActionResult> GetSignedPlayersAsync(int teamId)
         {
-            Team team = await _teamService.FindByIdAsync(teamId);
-            IEnumerable<Player> players = team?.Players ?? new List<Player>();
-            IEnumerable<PlayerResource> resources = _mapper.Map<IEnumerable<Player>, IEnumerable<PlayerResource>>(players);
-            return resources;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.GetErrorMessages());
+            }
+
+            var tsResponse = await _teamService.GetSignedPlayersAsync(teamId);
+            if (!tsResponse.Success)
+            {
+                return BadRequest(tsResponse.Message);
+            }
+
+            IEnumerable<PlayerResource> playerResources = _mapper.Map<IEnumerable<Player>, IEnumerable<PlayerResource>>(tsResponse.Result);
+            return Ok(playerResources);
         }
 
         /// <summary>

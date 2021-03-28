@@ -11,7 +11,7 @@ namespace RugbyUnion.API.Domain.Services
         Task<IEnumerable<Team>> GetAllAsync();
         Task<Team> FindByIdAsync(int teamId);
         Task<ServiceResponse<Team>> AddAsync(Team team);
-
+        Task<ServiceResponse<IEnumerable<Player>>> GetSignedPlayersAsync(int teamId);
         Task<ServiceResponse<Player>> SignAsync(int playerId, int teamId);
     }
 }

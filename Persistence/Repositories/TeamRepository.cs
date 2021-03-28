@@ -26,6 +26,5 @@ namespace RugbyUnion.API.Persistence.Repositories
         {
             await _context.Teams.AddAsync(team);
         }
-
     }
 }
