@@ -64,6 +64,7 @@ namespace RugbyUnion.API.Services
             try
             {
                 player.Team = team;
+                await _unitOfWork.CompleteAsync();
                 return new PlayerResponse(player);
             }
             catch (Exception ex)
